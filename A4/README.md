@@ -1,7 +1,7 @@
 # goSafe
 
 ## 1. Project Name  
-**goSafe**
+**GoSafe**
 
 ## 2. Selected Paper Prototype  
 For this project, we selected the **smartphone paper prototypes** instead of the smartwatch versions. We chose the smartphone format because it better suits the needs and interaction patterns of our application, which requires a larger interface, clearer visual elements, and more detailed user input capabilities.  
