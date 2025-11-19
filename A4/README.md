@@ -1,4 +1,4 @@
-# goSafe
+# GoSafe
 
 ## 1. Project Name  
 **GoSafe**
