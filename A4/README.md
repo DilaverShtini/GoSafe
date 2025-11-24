@@ -1,15 +1,13 @@
 # GoSafe
 
-## 1. Project Name  
+## 1. Nome progetto  
 **GoSafe**
 
-## 2. Selected Paper Prototype  
-For this project, we selected the **smartphone paper prototypes** instead of the smartwatch versions. We chose the smartphone format because it better suits the needs and interaction patterns of our application, which requires a larger interface, clearer visual elements, and more detailed user input capabilities.  
+## 2. Prototipo del Paper Selezionato 
+Per questo progetto, abbiamo scelto i prototipi cartacei per smartphone invece delle versioni per smartwatch. Abbiamo optato per il formato smartphone perché si adatta meglio alle esigenze e ai pattern di interazione della nostra applicazione, che richiede un’interfaccia più ampia, elementi visivi più chiari e capacità di input utente più dettagliate.
 
-During the transition from paper prototypes to the digital version, we decided to **move features originally designed for the smartwatch prototype into the smartphone layout**. These features will be adapted by expanding their visual components and reorganizing the interface to take advantage of the increased screen space while maintaining ease of use and quick accessibility.
-
-## 3. Interactive Prototype (Figma)  
-Below are the publicly accessible links to the two screens of the interactive prototype (to be added):
+## 3. Prototipo Interattivo (Figma) 
+Di seguito sono riportati i link pubblicamente accessibili alle due schermate del prototipo interattivo:
 
 - Screen 1: *[link coming soon]*  
 - Screen 2: *[link coming soon]*
