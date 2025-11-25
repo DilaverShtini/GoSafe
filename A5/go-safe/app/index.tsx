@@ -1,13 +1,16 @@
-import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function Index() {
+import SearchBar from "../src/components/SearchBar";
+import FloatingSosButton from "../src/components/FloatingSosButton";
+
+export default function MapScreen() {
   return (
-    <View style={{ flex: 1 }}>
-      {/* MAPPA */}
+    <View style={styles.container}>
       <MapView
-        style={{ flex: 1 }}
+        style={styles.map}
         initialRegion={{
           latitude: 43.8806,
           longitude: 12.9956,
@@ -15,7 +18,6 @@ export default function Index() {
           longitudeDelta: 0.01,
         }}
       >
-        {/* Esempio marker */}
         <Marker
           coordinate={{ latitude: 43.8806, longitude: 12.9956 }}
           title="Pericolo"
@@ -25,117 +27,19 @@ export default function Index() {
         </Marker>
       </MapView>
 
-      {/* SEARCH BAR */}
-      <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color="#666" />
-        <TextInput style={styles.input} placeholder="Ricerca luogo" />
-        <TouchableOpacity>
-          <Ionicons name="person-circle-outline" size={30} color="#6c5ce7" />
-        </TouchableOpacity>
-      </View>
-
-      {/* SOS BUTTON */}
-      <TouchableOpacity style={styles.sosButton}>
-        <Ionicons name="warning" size={40} color="black" />
-      </TouchableOpacity>
-
-      {/* NAVBAR */}
-      <View style={styles.navbar}>
-        <NavItem icon="map-outline" text="Mappa" active={true} />
-        <NavItem icon="people-outline" text="Gruppi" active={false} />
-        <NavItem icon="chatbubble-ellipses-outline" text="Chat" active={false} />
-        <NavItem icon="alert-circle-outline" text="SOS" active={false} />
-      </View>
+      {/* Questi componenti hanno già i loro stili all'interno dei rispettivi file */}
+      <SearchBar />
+      <FloatingSosButton />
     </View>
   );
 }
 
-interface NavItemProps {
-  icon: keyof typeof Ionicons.glyphMap;
-  text: string;
-  active: boolean;
-}
-
-function NavItem({ icon, text, active }: NavItemProps) {
-  return (
-    <TouchableOpacity style={styles.navItem}>
-      <Ionicons
-        name={icon}
-        size={22}
-        color={active ? "#6c5ce7" : "#999"}
-      />
-      <Text style={{ color: active ? "#6c5ce7" : "#999", fontSize: 12 }}>
-        {text}
-      </Text>
-    </TouchableOpacity>
-  );
-}
-
-
 const styles = StyleSheet.create({
-  searchContainer: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    right: 20,
-    backgroundColor: "#fff",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 3,
-    zIndex: 1000, // Layer superiore
-  },
-
-  input: {
+  container: {
     flex: 1,
-    fontSize: 16,
   },
-
-  sosButton: {
-    position: "absolute",
-    bottom: 105, // Alza ancora di più il pulsante
-    right: 10,
-    backgroundColor: "#b2f200",
-    width: 70,
-    height: 70,
-    borderRadius: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-  },
-
-  navbar: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    justifyContent: "space-around", // Distribuisce gli oggetti equamente
-    alignItems: "center",
-    borderColor: "#eee", // Colore del bordo
-    shadowColor: "#000", // Aggiunge un'ombra
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 30, // Ombra su Android
-  },
-
-  navItem: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 30, // Sposta gli oggetti orizzontalmente
-    transform: [{ translateY: -13 }], // Sposta gli oggetti leggermente verso l'alto
+  map: {
+    width: "100%",
+    height: "100%",
   },
 });
-
-
-
