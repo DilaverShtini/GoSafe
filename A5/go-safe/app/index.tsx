@@ -41,16 +41,22 @@ export default function Index() {
 
       {/* NAVBAR */}
       <View style={styles.navbar}>
-        <NavItem icon="map-outline" text="Mappa" active />
-        <NavItem icon="people-outline" text="Gruppi" />
-        <NavItem icon="chatbubble-ellipses-outline" text="Chat" />
-        <NavItem icon="alert-circle-outline" text="SOS" />
+        <NavItem icon="map-outline" text="Mappa" active={true} />
+        <NavItem icon="people-outline" text="Gruppi" active={false} />
+        <NavItem icon="chatbubble-ellipses-outline" text="Chat" active={false} />
+        <NavItem icon="alert-circle-outline" text="SOS" active={false} />
       </View>
     </View>
   );
 }
 
-function NavItem({ icon, text, active }) {
+interface NavItemProps {
+  icon: keyof typeof Ionicons.glyphMap;
+  text: string;
+  active: boolean;
+}
+
+function NavItem({ icon, text, active }: NavItemProps) {
   return (
     <TouchableOpacity style={styles.navItem}>
       <Ionicons
