@@ -2,9 +2,13 @@ import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function FloatingReportButton() {
+interface FloatingReportButtonProps {
+  onPress: () => void;
+}
+
+export default function FloatingReportButton({ onPress }: FloatingReportButtonProps) {
   return (
-    <TouchableOpacity style={styles.reportButton}>
+    <TouchableOpacity style={styles.reportButton} onPress={onPress}>
       <Ionicons name="warning" size={40} color="black" />
     </TouchableOpacity>
   );
