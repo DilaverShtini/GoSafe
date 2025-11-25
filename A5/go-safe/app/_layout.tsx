@@ -6,7 +6,7 @@ export default function Layout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: true, // Vuoi vedere il testo "Mappa", "Chat"? Metti true
+        tabBarShowLabel: true,
         tabBarActiveTintColor: "#6c5ce7",
         tabBarInactiveTintColor: "#999",
       }}

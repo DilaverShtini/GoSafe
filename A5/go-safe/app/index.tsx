@@ -4,7 +4,7 @@ import MapView, { Marker } from "react-native-maps";
 import { Ionicons } from "@expo/vector-icons";
 
 import SearchBar from "../src/components/SearchBar";
-import FloatingSosButton from "../src/components/FloatingSosButton";
+import FloatingSosButton from "../src/components/FloatingReportButton";
 
 export default function MapScreen() {
   return (
@@ -27,7 +27,7 @@ export default function MapScreen() {
         </Marker>
       </MapView>
 
-      {/* Questi componenti hanno già i loro stili all'interno dei rispettivi file */}
+      {}
       <SearchBar />
       <FloatingSosButton />
     </View>

@@ -2,16 +2,16 @@ import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function FloatingSosButton() {
+export default function FloatingReportButton() {
   return (
-    <TouchableOpacity style={styles.sosButton}>
+    <TouchableOpacity style={styles.reportButton}>
       <Ionicons name="warning" size={40} color="black" />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  sosButton: {
+  reportButton: {
     position: "absolute",
     bottom: 10,
     right: 10,
