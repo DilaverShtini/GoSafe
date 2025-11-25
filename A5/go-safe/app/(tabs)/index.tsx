@@ -3,8 +3,8 @@ import { View, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Ionicons } from "@expo/vector-icons";
 
-import SearchBar from "../src/components/SearchBar";
-import FloatingSosButton from "../src/components/FloatingReportButton";
+import SearchBar from "../../src/components/SearchBar";
+import FloatingSosButton from "../../src/components/FloatingReportButton";
 
 export default function MapScreen() {
   return (
