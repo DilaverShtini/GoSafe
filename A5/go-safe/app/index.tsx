@@ -71,10 +71,11 @@ function NavItem({ icon, text, active }: NavItemProps) {
   );
 }
 
+
 const styles = StyleSheet.create({
   searchContainer: {
     position: "absolute",
-    top: 50,
+    top: 20,
     left: 20,
     right: 20,
     backgroundColor: "#fff",
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 6,
     elevation: 3,
+    zIndex: 1000, // Layer superiore
   },
 
   input: {
@@ -97,8 +99,8 @@ const styles = StyleSheet.create({
 
   sosButton: {
     position: "absolute",
-    bottom: 90,
-    right: 20,
+    bottom: 105, // Alza ancora di più il pulsante
+    right: 10,
     backgroundColor: "#b2f200",
     width: 70,
     height: 70,
@@ -115,17 +117,25 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 70,
+    height: 80,
     backgroundColor: "#fff",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-around", // Distribuisce gli oggetti equamente
     alignItems: "center",
-    borderTopWidth: 1,
-    borderColor: "#eee",
+    borderColor: "#eee", // Colore del bordo
+    shadowColor: "#000", // Aggiunge un'ombra
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 30, // Ombra su Android
   },
 
   navItem: {
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal: 30, // Sposta gli oggetti orizzontalmente
+    transform: [{ translateY: -13 }], // Sposta gli oggetti leggermente verso l'alto
   },
 });
+
+
+
