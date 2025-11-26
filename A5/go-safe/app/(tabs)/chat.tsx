@@ -7,15 +7,15 @@ import {
   TouchableOpacity, 
   Modal, 
   TextInput,
-  SafeAreaView as SafeAreaViewNative,
-  StatusBar
+  StatusBar,
+  SafeAreaView as SafeAreaViewNative
 } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
-// --- 1. DATI INIZIALI (Ora li chiamiamo INITIAL_CHATS) ---
-const INITIAL_CHATS = [
+// --- DATI STATICI ---
+const DUMMY_CHATS = [
   { id: 'c1', user: 'Mario Rossi', lastMessage: 'Perfetto, ci vediamo domani.', time: '15:30', sortDate: '2025-11-26T15:30:00Z' },
   { id: 'c2', user: 'Anna Bianchi', lastMessage: 'Hai ricevuto il documento?', time: 'Ieri', sortDate: '2025-11-25T10:00:00Z' },
   { id: 'c3', user: 'Luca Verdi', lastMessage: 'Grazie mille per l\'aiuto!', time: 'Lunedì', sortDate: '2025-11-24T10:00:00Z' },
@@ -24,7 +24,6 @@ const INITIAL_CHATS = [
   { id: 'c6', user: 'Elena Marroni', lastMessage: 'Ti richiamo più tardi.', time: '12:05', sortDate: '2025-11-26T12:05:00Z' },
 ];
 
-// --- 2. DATI CONTATTI ---
 const MOCK_CONTACTS = [
   { id: 'u1', name: 'Luigi Verdi' },
   { id: 'u2', name: 'Giulia Neri' },
@@ -35,7 +34,7 @@ const MOCK_CONTACTS = [
   { id: 'u7', name: 'Supporto Clienti' },
 ];
 
-// --- 3. COMPONENTE MODALE ---
+// --- COMPONENTE MODALE ---
 const CreateChatModal = ({ visible, onClose, onSelectContact }: any) => {
   const [searchText, setSearchText] = useState("");
 
@@ -92,16 +91,12 @@ const CreateChatModal = ({ visible, onClose, onSelectContact }: any) => {
   );
 };
 
-// --- 4. SCHERMATA PRINCIPALE ---
+// --- SCHERMATA PRINCIPALE ---
 export default function ChatScreen() {
   const router = useRouter();
   const [isModalVisible, setModalVisible] = useState(false);
   
-  // *** MODIFICA IMPORTANTE: Ora usiamo useState per la lista delle chat ***
-  const [chats, setChats] = useState(INITIAL_CHATS);
-
-  // Ordiniamo le chat dinamicamente
-  const sortedChats = chats.slice().sort((a, b) => {
+  const sortedChats = DUMMY_CHATS.slice().sort((a, b) => {
     return new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime();
   });
 
@@ -109,34 +104,11 @@ export default function ChatScreen() {
     router.push({ pathname: '/detail', params: { user, id } });
   };
 
-  // Funzione CREAZIONE NUOVA CHAT
   const handleCreateNewChat = (contactName: string) => {
-    setModalVisible(false); // Chiudi modale
-    
-    // 1. Controlla se la chat esiste già nella lista attuale
-    const existingChat = chats.find(c => c.user === contactName);
-    
-    if (existingChat) {
-        // Se esiste, apri quella
-        goToChat(existingChat.id, contactName);
-    } else {
-        // 2. Se NON esiste, creiamola e aggiungiamola alla lista!
-        const newChatId = `new_${Date.now()}`;
-        
-        const newChatObj = {
-            id: newChatId,
-            user: contactName,
-            lastMessage: 'Nuova conversazione', // Messaggio placeholder
-            time: 'Adesso',
-            sortDate: new Date().toISOString(), // Data attuale per farla apparire in cima
-        };
-
-        // Aggiorniamo lo stato aggiungendo la nuova chat in cima
-        setChats(prevChats => [newChatObj, ...prevChats]);
-        
-        // Navighiamo alla nuova chat
-        goToChat(newChatId, contactName);
-    }
+    setModalVisible(false);
+    const existingChat = DUMMY_CHATS.find(c => c.user === contactName);
+    const chatId = existingChat ? existingChat.id : `temp_${Date.now()}`;
+    goToChat(chatId, contactName);
   };
   
   return (
@@ -155,9 +127,10 @@ export default function ChatScreen() {
              activeOpacity={0.7}
              onPress={() => goToChat(item.id, item.user)}
            >
+             {/* AVATAR AGGIORNATO */}
              <View style={styles.avatarContainer}>
-                {/* Usiamo l'iniziale se non c'è immagine */}
-                <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 18}}>
+                {/* Colore testo cambiato per contrasto col fondo chiaro */}
+                <Text style={{color: '#5E35B1', fontWeight: 'bold', fontSize: 18}}>
                     {item.user.charAt(0).toUpperCase()}
                 </Text>
              </View>
@@ -193,14 +166,26 @@ export default function ChatScreen() {
   );
 }
 
-// --- STILI ---
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#fff', paddingTop: StatusBar.currentHeight || 0 },
   screenHeader: { paddingHorizontal: 20, paddingVertical: 15, backgroundColor: "#fff", borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
   screenTitle: { fontSize: 28, fontWeight: "bold", color: "#333" },
   listContent: { paddingBottom: 100 },
+  
+  // Riga Chat
   chatContainer: { flexDirection: 'row', padding: 15, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#ccc', alignItems: 'center' },
-  avatarContainer: { width: 50, height: 50, borderRadius: 25, backgroundColor: '#ccc', marginRight: 15, justifyContent: 'center', alignItems: 'center' },
+  
+  // *** AVATAR AGGIORNATO QUI ***
+  avatarContainer: { 
+    width: 50, 
+    height: 50, 
+    borderRadius: 25, 
+    backgroundColor: '#F3E5F5', // <--- NUOVO COLORE SFONDO
+    marginRight: 15, 
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  },
+  
   textContainer: { flex: 1, justifyContent: 'center' },
   rowHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
   userName: { fontSize: 16, fontWeight: 'bold', color: '#333' },
@@ -219,8 +204,11 @@ const styles = StyleSheet.create({
   searchInput: { flex: 1, fontSize: 16, color: "#333" },
   modalListContent: { paddingHorizontal: 20, paddingBottom: 40 },
   contactRow: { flexDirection: "row", alignItems: "center", backgroundColor: "#fff", padding: 15, marginBottom: 10, borderRadius: 12, borderWidth: 1, borderColor: "#E0E0E0" },
-  contactAvatar: { width: 50, height: 50, borderRadius: 25, backgroundColor: "#EADDFF", justifyContent: "center", alignItems: "center", marginRight: 15 },
-  avatarText: { fontSize: 18, fontWeight: "bold", color: "#6C5CE7" },
+  
+  // Avatar nel Modale (anche qui usiamo lo stesso stile per coerenza)
+  contactAvatar: { width: 50, height: 50, borderRadius: 25, backgroundColor: "#F3E5F5", justifyContent: "center", alignItems: "center", marginRight: 15 },
+  avatarText: { fontSize: 18, fontWeight: "bold", color: "#5E35B1" }, // Viola scuro
+  
   contactInfo: { flex: 1 },
   contactName: { fontSize: 16, fontWeight: "600", color: "#333" },
   contactStatus: { fontSize: 12, color: "#888", marginTop: 2 },
