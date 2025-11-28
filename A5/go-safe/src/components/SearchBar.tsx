@@ -1,20 +1,67 @@
-import React from "react";
-import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, TextInput, TouchableOpacity, StyleSheet, Alert, Keyboard } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import * as Location from "expo-location"; // <--- Necessario per trovare le coordinate
 
-export default function SearchBar() {
+// Definiamo cosa deve passare la SearchBar al padre (la Mappa)
+interface SearchBarProps {
+  onSearchLocation?: (coords: { latitude: number; longitude: number }) => void;
+}
+
+export default function SearchBar({ onSearchLocation }: SearchBarProps) {
   const router = useRouter();
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearch = async () => {
+    // Se non c'è testo o non c'è la funzione collegata, non fare nulla
+    if (!searchText.trim() || !onSearchLocation) return;
+    
+    Keyboard.dismiss(); // Chiude la tastiera
+
+    try {
+      // Usa il servizio nativo del telefono per trovare le coordinate (Gratis)
+      const geocodedLocation = await Location.geocodeAsync(searchText);
+
+      if (geocodedLocation.length > 0) {
+        const result = geocodedLocation[0];
+        // Passa le coordinate alla schermata della mappa
+        onSearchLocation({
+          latitude: result.latitude,
+          longitude: result.longitude,
+        });
+      } else {
+        Alert.alert("Non trovato", "Impossibile trovare il luogo cercato.");
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Errore", "Si è verificato un errore durante la ricerca.");
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {/* Search Box */}
+      {/* Box di Ricerca */}
       <View style={styles.searchBox}>
         <Ionicons name="search" size={20} color="#666" />
-        <TextInput style={styles.input} placeholder="Ricerca luogo" />
+        <TextInput 
+          style={styles.input} 
+          placeholder="Cerca destinazione..." 
+          value={searchText}
+          onChangeText={setSearchText}
+          onSubmitEditing={handleSearch} // Avvia la ricerca quando premi "Invio" sulla tastiera
+          returnKeyType="search"
+        />
+        
+        {/* Tasto X per cancellare il testo */}
+        {searchText.length > 0 && (
+           <TouchableOpacity onPress={() => setSearchText("")}>
+             <Ionicons name="close" size={20} color="#ccc" />
+           </TouchableOpacity>
+        )}
       </View>
 
-      {/* Profile Button */}
+      {/* Tasto Profilo */}
       <TouchableOpacity 
         style={styles.profileButton}
         onPress={() => router.push("/profile")} 
@@ -45,6 +92,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     gap: 10,
+    // Ombre
     shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowRadius: 6,
@@ -61,6 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
+    // Ombre
     shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowRadius: 6,
